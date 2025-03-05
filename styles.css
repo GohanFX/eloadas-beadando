@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
+/* General Styles */
 body {
     font-family: 'Inter', sans-serif;
     margin: 0;
@@ -14,6 +13,18 @@ header {
     color: white;
     padding: 1em;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#sidebarToggle {
+    display: none; /* Hidden by default */
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
 }
 
 nav {
@@ -47,27 +58,22 @@ nav ul li a:hover {
     background-color: #4CAF50;
 }
 
+.container {
+    display: flex;
+    flex: 1;
+}
+
 aside {
     background-color: #f4f4f4;
     width: 200px;
-    height: calc(100vh - 25.9vh); /* Adjust height dynamically */
     padding: 1em;
-    box-sizing: border-box; /* Ensure padding is included in height */
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
 }
 
-#content {
+main {
     flex: 1;
-    display: flex;
-    width: 100%;
-    box-sizing: border-box; /* Ensure padding and borders are included in width */
-}
-
-.mainSect {
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%; /* Ensure it takes full width */
+    padding: 1em;
 }
 
 footer {
@@ -75,5 +81,138 @@ footer {
     color: white;
     text-align: center;
     padding: 1em;
-    margin-top: auto; /* Push footer to the bottom */
+    margin-top: auto;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    #sidebarToggle {
+        display: block; /* Show toggle button on mobile */
+    }
+
+    .container {
+        flex-direction: column;
+    }
+
+    aside {
+        position: fixed;
+        top: 0;
+        left: -200px; /* Hide sidebar by default */
+        height: 100vh;
+        z-index: 1000;
+        background-color: #f4f4f4;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    aside.active {
+        left: 0; /* Show sidebar when active */
+    }
+
+    main {
+        margin-left: 0;
+    }
+}
+
+/* Táblázat stílusok */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+
+button {
+    padding: 5px 10px;
+    margin: 2px;
+    cursor: pointer;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    padding: 12px;
+    margin: 8px 0;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Focus State */
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+}
+
+/* Placeholder Styling */
+input::placeholder,
+textarea::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* Button Styling */
+button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Disabled Input Styling */
+input:disabled,
+textarea:disabled,
+select:disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+}
+
+/* Error State */
+input.error,
+textarea.error,
+select.error {
+    border-color: #ff4444;
+}
+
+input.error:focus,
+textarea.error:focus,
+select.error:focus {
+    box-shadow: 0 0 8px rgba(255, 68, 68, 0.3);
 }

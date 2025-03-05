@@ -9,28 +9,31 @@
 <body>
     <header>
         <h1>Web-programozás-1 Előadás Házi feladat</h1>
+        <button id="sidebarToggle">☰</button>
     </header>
     <nav>
         <ul>
             <li><a href="index.html" class="active">Főoldal</a></li>
-            <li><a href="table.html">Táblázat menü</a></li>
+            <li><a href="table.html" >Táblázat menü</a></li>
             <li><a href="html5.html">HTML5 menü</a></li>
             <li><a href="chart.html">ChartJS menü</a></li>
             <li><a href="ajax.html">AJAX menü</a></li>
             <li><a href="oojs.html">OOJS menü</a></li>
         </ul>
     </nav>
-    
-    <main id="content">
-        <aside>
+    <div class="container">
+        <aside id="sidebar">
             <h1>Ez most öszintén miért kellett?</h1>
         </aside>
-        <section class="mainSect">
-            Ez itt a főoldal!
-        </section>
-    </main>
+        <main id="content">
+            <section class="mainSect">
+                Ez itt a főoldal!
+            </section>
+        </main>
+    </div>
     <footer>
         <p>Készítők: Szűcs Levente (AHSSPU), Jónás Attila (Q7CJ2Z)</p>
     </footer>
+    <script src="scripts.js"></script>
 </body>
 </html>

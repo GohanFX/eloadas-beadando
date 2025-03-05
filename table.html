@@ -1,18 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MovieDB | Főoldal</title>
+    <title>MovieDB | Táblázat menü</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="table.js" defer></script>
 </head>
+
 <body>
     <header>
         <h1>Web-programozás-1 Előadás Házi feladat</h1>
     </header>
     <nav>
         <ul>
-            <li><a href="index.html" >Főoldal</a></li>
+            <li><a href="index.html">Főoldal</a></li>
             <li><a href="table.html" class="active">Táblázat menü</a></li>
             <li><a href="html5.html">HTML5 menü</a></li>
             <li><a href="chart.html">ChartJS menü</a></li>
@@ -20,14 +23,49 @@
             <li><a href="oojs.html">OOJS menü</a></li>
         </ul>
     </nav>
-   
     <main id="content">
         <aside>
             <h1>Ez most öszintén miért kellett?</h1>
         </aside>
+        <section>
+            <div class="mainSect">
+                <div>
+                    <h2>Táblázat menü</h2>
+                    <!-- Új adat hozzáadása -->
+                    <form id="dataForm">
+                        <input type="text" id="name" placeholder="Név" required maxlength="30">
+                        <input type="number" id="age" placeholder="Kor" required min="0" max="120">
+                        <input type="text" id="city" placeholder="Város" required maxlength="30">
+                        <button type="submit">Hozzáad</button>
+                    </form>
+                </div>
+    
+                <!-- Szűrés és rendezés -->
+                <div>
+                    <input type="text" id="searchInput" placeholder="Keresés...">
+                    <button onclick="filterTable()">Szűrés</button>
+                </div>
+            </div>
+
+            <!-- Táblázat -->
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable(0)">Név</th>
+                        <th onclick="sortTable(1)">Kor</th>
+                        <th onclick="sortTable(2)">Város</th>
+                        <th>Műveletek</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Adatok jönnek ide -->
+                </tbody>
+            </table>
+        </section>
     </main>
     <footer>
         <p>Készítők: Szűcs Levente (AHSSPU), Jónás Attila (Q7CJ2Z)</p>
     </footer>
 </body>
+
 </html>
