@@ -21,14 +21,14 @@ document.addEventListener('DOMContentLoaded', function () {
         // Új sor hozzáadása
         const newRow = { name, age, city };
         data.push(newRow);
-        renderTable();
+        renderTable(data);
         form.reset();
     });
 
     // Táblázat renderelése
-    function renderTable() {
+    function renderTable(dataToRender) {
         tableBody.innerHTML = '';
-        data.forEach((row, index) => {
+        dataToRender.forEach((row, index) => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${row.name}</td>
@@ -50,13 +50,13 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('age').value = row.age;
         document.getElementById('city').value = row.city;
         data.splice(index, 1); // Régi sor törlése
-        renderTable();
+        renderTable(data);
     };
 
     // Sor törlése
     window.deleteRow = function (index) {
         data.splice(index, 1);
-        renderTable();
+        renderTable(data);
     };
 
     window.sortTable = function (columnIndex) {
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (a[key] > b[key]) return 1;
             return 0;
         });
-        renderTable();
+        renderTable(data);
     };
 
     window.filterTable = function () {
@@ -76,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function () {
             row.age.toString().includes(searchTerm) ||
             row.city.toLowerCase().includes(searchTerm)
         )
-        data = filteredData;
-        renderTable();
+        renderTable(filteredData);
     };
 });

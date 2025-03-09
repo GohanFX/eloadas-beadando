@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MovieDB | Táblázat menü</title>
+    <title>Web1 | Táblázat menü</title>
     <link rel="stylesheet" href="styles.css">
     <script src="table.js" defer></script>
 </head>
@@ -23,12 +23,12 @@
             <li><a href="oojs.html">OOJS menü</a></li>
         </ul>
     </nav>
-    <main id="content">
-        <aside>
+    <div class="container">
+        <aside id="sidebar">
             <h1>Ez most öszintén miért kellett?</h1>
         </aside>
-        <section>
-            <div class="mainSect">
+        <main id="content">
+            <section class="mainSect">
                 <div>
                     <h2>Táblázat menü</h2>
                     <!-- Új adat hozzáadása -->
@@ -45,22 +45,24 @@
                     <input type="text" id="searchInput" placeholder="Keresés...">
                     <button onclick="filterTable()">Szűrés</button>
                 </div>
+
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable(0)">Név</th>
+                            <th onclick="sortTable(1)">Kor</th>
+                            <th onclick="sortTable(2)">Város</th>
+                            <th>Műveletek</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Adatok jönnek ide -->
+                    </tbody>
+                </table>
             </div>
 
             <!-- Táblázat -->
-            <table id="dataTable">
-                <thead>
-                    <tr>
-                        <th onclick="sortTable(0)">Név</th>
-                        <th onclick="sortTable(1)">Kor</th>
-                        <th onclick="sortTable(2)">Város</th>
-                        <th>Műveletek</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Adatok jönnek ide -->
-                </tbody>
-            </table>
+            
         </section>
     </main>
     <footer>
