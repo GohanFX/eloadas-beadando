@@ -27,6 +27,13 @@ header {
     cursor: pointer;
 }
 
+#sidebar ul {
+    list-style-type: none;
+}
+#sidebar ul a {
+    text-decoration: none;
+}
+
 nav {
     background-color: #333;
 }
