@@ -4,20 +4,28 @@ import { motion } from "framer-motion";
 const GRID_SIZE = 20;
 const INITIAL_SNAKE = [{ x: 10, y: 10 }];
 const INITIAL_FOOD = { x: 5, y: 5 };
-const INITIAL_LIVES = 3;
 
-const SnakeGame: React.FC = () => {
+interface SnakeGameProps {
+  defaultHealth: number,
+  pointsPerApple: number,
+  startOnSpace: boolean
+}
+
+const SnakeGame: React.FC<SnakeGameProps> = ({defaultHealth, pointsPerApple, startOnSpace}: SnakeGameProps) => {
   const [snake, setSnake] = useState(INITIAL_SNAKE);
   const [food, setFood] = useState(INITIAL_FOOD);
   const [direction, setDirection] = useState<{ x: number; y: number }>({ x: 0, y: -1 });
-  const [isRunning, setIsRunning] = useState(true);
+  const [isRunning, setIsRunning] = useState(!startOnSpace);
   const [score, setScore] = useState(0);
-  const [lives, setLives] = useState(INITIAL_LIVES);
+  const [lives, setLives] = useState(defaultHealth);
   const [showPoints, setShowPoints] = useState<{ x: number; y: number } | null>(null);
   const [showGameOver, setShowGameOver] = useState(false);
-
+  
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (!isRunning && event.code === "Space") {
+        setIsRunning(true);
+      }
       switch (event.key) {
         case "ArrowUp":
           setDirection({ x: 0, y: -1 });
@@ -35,7 +43,7 @@ const SnakeGame: React.FC = () => {
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [isRunning]);
 
   useEffect(() => {
     if (!isRunning || showGameOver) return;
@@ -65,7 +73,7 @@ const SnakeGame: React.FC = () => {
         
         if (newHead.x === food.x && newHead.y === food.y) {
           setFood({ x: Math.floor(Math.random() * GRID_SIZE), y: Math.floor(Math.random() * GRID_SIZE) });
-          setScore((prev) => prev + 10);
+          setScore((prev) => prev + pointsPerApple);
           setShowPoints({ x: food.x, y: food.y });
           setTimeout(() => setShowPoints(null), 800);
           return [newHead, ...prev]; // Snake grows
@@ -80,6 +88,11 @@ const SnakeGame: React.FC = () => {
 
   return (
     <div className="relative w-[400px] h-[400px] border border-gray-500 bg-gray-900 rounded-lg shadow-lg p-2">
+      {!isRunning && !showGameOver && (
+        <div className="absolute inset-0 flex items-center justify-center text-white text-lg font-bold">
+          Nyomd meg a SPACE-t a kezdéshez
+        </div>
+      )}
       <div className="absolute top-2 left-2 bg-gray-800 text-white p-2 rounded shadow text-sm">
         <p className="font-semibold">❤️ Életek: {lives}</p>
         <p className="font-semibold">⭐ Pont: {score}</p>
@@ -103,7 +116,7 @@ const SnakeGame: React.FC = () => {
           className="absolute text-yellow-400 font-bold text-lg"
           style={{ left: `${showPoints.x * 20}px`, top: `${showPoints.y * 20}px` }}
         >
-          +20
+          +{pointsPerApple}
         </motion.div>
       )}
       {showGameOver && (

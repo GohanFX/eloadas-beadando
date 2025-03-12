@@ -3,8 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web1 | Főoldal</title>
+    <title>ChartJS Táblázat</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px;
+        }
+        .table-container, .chart-container {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .chart-container canvas {
+            width: 100% !important;
+            height: 300px !important;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -12,9 +49,9 @@
     </header>
     <nav>
         <ul>
-            <li><a href="index.html" >Főoldal</a></li>
-            <li><a href="table.html" >Táblázat menü</a></li>
-            <li><a href="html5.html" >HTML5 menü</a></li>
+            <li><a href="index.html">Főoldal</a></li>
+            <li><a href="table.html">Táblázat menü</a></li>
+            <li><a href="html5.html">HTML5 menü</a></li>
             <li><a href="chart.html" class="active">ChartJS menü</a></li>
             <li><a href="ajax.html">AJAX menü</a></li>
             <li><a href="oojs.html">OOJS menü</a></li>
@@ -22,17 +59,61 @@
     </nav>
     
     <div class="container">
-        <aside id="sidebar">
-            <h1>Ez most öszintén miért kellett?</h1>
-        </aside>
-        <main id="content">
-            <section class="mainSect">
-                Ez itt a főoldal!
-            </section>
-        </main>
+        <div class="table-container">
+            <h2>5x5-ös számokat tartalmazó táblázat</h2>
+            <table id="data-table">
+                <tbody>
+                    <script>
+                        for (let i = 0; i < 5; i++) {
+                            document.write('<tr onclick="drawChart(this)">');
+                            for (let j = 0; j < 5; j++) {
+                                document.write(`<td>${Math.floor(Math.random() * 100)}</td>`);
+                            }
+                            document.write('</tr>');
+                        }
+                    </script>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="chart-container">
+            <h2>Vonaldiagram</h2>
+            <canvas id="lineChart"></canvas>
+        </div>
     </div>
-    <footer>
-        <p>Készítők: Szűcs Levente (AHSSPU), Jónás Attila (Q7CJ2Z)</p>
-    </footer>
+    
+    <script>
+        let chart;
+        function drawChart(row) {
+            let values = Array.from(row.children).map(td => parseInt(td.innerText));
+            let labels = values.map((_, i) => `Adat ${i + 1}`);
+            
+            if (chart) chart.destroy();
+            
+            let ctx = document.getElementById('lineChart').getContext('2d');
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Kiválasztott sor értékei',
+                        data: values,
+                        borderColor: 'blue',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>
