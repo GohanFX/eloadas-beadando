@@ -2,10 +2,14 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 
-const words = ["react", "typescript", "hangman", "developer", "frontend"];
 const MAX_ATTEMPTS = 6;
 
-const HangmanGame: React.FC = () => {
+interface HangmanProps {
+  words: string[];
+  maxAttempts: number;
+}
+
+const HangmanGame: React.FC<HangmanProps> = ({words, maxAttempts}: HangmanProps) => {
     
   const [word, setWord] = useState(words[Math.floor(Math.random() * words.length)]);
   const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
@@ -40,7 +44,7 @@ const HangmanGame: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center rounded-lg bg-gray-900 text-white p-4">
       <h1 className="text-4xl font-extrabold mb-6 text-yellow-400">Hangman</h1>
-      <p className="text-lg mb-2">Attempts left: <span className="font-bold text-red-500">{MAX_ATTEMPTS - attempts}</span></p>
+      <p className="text-lg mb-2">Attempts left: <span className="font-bold text-red-500">{maxAttempts - attempts}</span></p>
       <svg width="200" height="250" className="mb-6">
         {/* Állvány */}
         <line x1="50" y1="220" x2="150" y2="220" stroke="white" strokeWidth="4" />

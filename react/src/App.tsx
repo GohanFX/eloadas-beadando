@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 
 function App() {
   const [selectedGame, setSelectedGame] = useState<"snake" | "hangman">("snake");
+  const words = ["react", "typescript", "hangman", "developer", "frontend"];
 
   return (
     <div className="flex flex-col items-center p-6">
@@ -32,7 +33,7 @@ function App() {
         transition={{ duration: 0.3 }}
         className="w-full flex justify-center mt-6"
       >
-        {selectedGame === "snake" ? <SnakeGame startOnSpace={true} pointsPerApple={20} defaultHealth={5} /> : <HangmanGame />}
+        {selectedGame === "snake" ? <SnakeGame startOnSpace={true} pointsPerApple={20} defaultHealth={5} /> : <HangmanGame words={words} maxAttempts={6}/>}
       </motion.div>
     </div>
   );
