@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 
@@ -9,23 +9,39 @@ interface HangmanProps {
   maxAttempts: number;
 }
 
-const HangmanGame: React.FC<HangmanProps> = ({words, maxAttempts}: HangmanProps) => {
-    
+const HangmanGame: React.FC<HangmanProps> = ({ words, maxAttempts }: HangmanProps) => {
+
   const [word, setWord] = useState(words[Math.floor(Math.random() * words.length)]);
   const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
   const [attempts, setAttempts] = useState(0);
   const [gameOver, setGameOver] = useState(false);
 
-  const handleGuess = (letter: string) => {
+  
+
+  const handleGuess = useCallback((letter: string) => {
     if (gameOver || guessedLetters.includes(letter)) return;
     
-    setGuessedLetters([...guessedLetters, letter]);
+    setGuessedLetters(prev => [...prev, letter]);
     
     if (!word.includes(letter)) {
-      setAttempts(attempts + 1);
-      if (attempts + 1 >= MAX_ATTEMPTS) setGameOver(true);
+      setAttempts(prev => {
+        const updated = prev + 1;
+        if (updated >= maxAttempts) setGameOver(true);
+        return updated;
+      });
     }
-  };
+  }, [guessedLetters, word, gameOver, maxAttempts]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const key = e.key.toLowerCase();
+      if (/^[a-z]$/.test(key)) {
+        handleGuess(key);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleGuess]);
 
   const resetGame = () => {
     setWord(words[Math.floor(Math.random() * words.length)]);
@@ -51,7 +67,7 @@ const HangmanGame: React.FC<HangmanProps> = ({words, maxAttempts}: HangmanProps)
         <line x1="100" y1="220" x2="100" y2="50" stroke="white" strokeWidth="4" />
         <line x1="100" y1="50" x2="150" y2="50" stroke="white" strokeWidth="4" />
         <line x1="150" y1="50" x2="150" y2="70" stroke="white" strokeWidth="4" />
-        
+
         {/* Akasztott figura */}
         {attempts > 0 && <circle cx="150" cy="90" r="20" stroke="white" strokeWidth="4" fill="none" />} {/* Fej */}
         {attempts > 1 && <line x1="150" y1="110" x2="150" y2="170" stroke="white" strokeWidth="4" />} {/* Törzs */}
@@ -60,19 +76,32 @@ const HangmanGame: React.FC<HangmanProps> = ({words, maxAttempts}: HangmanProps)
         {attempts > 4 && <line x1="150" y1="170" x2="130" y2="200" stroke="white" strokeWidth="4" />} {/* Bal láb */}
         {attempts > 5 && <line x1="150" y1="170" x2="170" y2="200" stroke="white" strokeWidth="4" />} {/* Jobb láb */}
       </svg>
-      <p className="text-3xl font-mono mb-6 tracking-widest">{displayWord}</p>
+      <p className="text-3xl font-mono mb-6 tracking-widest flex gap-2">
+  {word.split("").map((letter, i) => (
+    <motion.span
+      key={i}
+      animate={{ opacity: guessedLetters.includes(letter) ? 1 : 0.3 }}
+      className="border-b-2 border-gray-600 px-2"
+    >
+      {guessedLetters.includes(letter) ? letter.toUpperCase() : "_"}
+    </motion.span>
+  ))}
+</p>
       <div className="grid grid-cols-9 gap-3 max-w-md">
         {"abcdefghijklmnopqrstuvwxyz".split("").map((letter) => (
-          !guessedLetters.includes(letter) ? (
-            <motion.button
-              key={letter}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded transition-all"
-              onClick={() => handleGuess(letter)}
-              whileTap={{ scale: 0.9 }}
-            >
-              {letter.toUpperCase()}
-            </motion.button>
-          ) : null
+          <motion.button
+            key={letter}
+            onClick={() => handleGuess(letter)}
+            disabled={guessedLetters.includes(letter)}
+            className={`font-bold py-2 px-3 rounded transition-all
+      ${guessedLetters.includes(letter)
+                ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-700 text-white"}
+    `}
+            whileTap={{ scale: guessedLetters.includes(letter) ? 1 : 0.9 }}
+          >
+            {letter.toUpperCase()}
+          </motion.button>
         ))}
       </div>
       {(gameOver || isWordGuessed) && (
