@@ -14,7 +14,7 @@ let worker;
 function startWorker() {
   if (typeof Worker !== "undefined") {
     if (!worker) {
-      worker = new Worker("worker.js");
+      worker = new Worker("../worker.js");
       worker.onmessage = function (event) {
         document.getElementById("worker-output").innerText = event.data;
       };

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChartJS Táblázat</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .container {
@@ -49,12 +49,12 @@
     </header>
     <nav>
         <ul>
-            <li><a href="index.html">Főoldal</a></li>
-            <li><a href="table.html">Táblázat menü</a></li>
-            <li><a href="html5.html">HTML5 menü</a></li>
-            <li><a href="chart.html" class="active">ChartJS menü</a></li>
-            <li><a href="ajax.html">AJAX menü</a></li>
-            <li><a href="oojs.html">OOJS menü</a></li>
+            <li><a href="/">Főoldal</a></li>
+            <li><a href="/table">Táblázat menü</a></li>
+            <li><a href="/html5">HTML5 menü</a></li>
+            <li><a href="/chart" class="active">ChartJS menü</a></li>
+            <li><a href="/ajax">AJAX menü</a></li>
+            <li><a href="/oojs">OOJS menü</a></li>
         </ul>
     </nav>
     
@@ -81,39 +81,11 @@
             <canvas id="lineChart"></canvas>
         </div>
     </div>
-    
-    <script>
-        let chart;
-        function drawChart(row) {
-            let values = Array.from(row.children).map(td => parseInt(td.innerText));
-            let labels = values.map((_, i) => `Adat ${i + 1}`);
-            
-            if (chart) chart.destroy();
-            
-            let ctx = document.getElementById('lineChart').getContext('2d');
-            chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Kiválasztott sor értékei',
-                        data: values,
-                        borderColor: 'blue',
-                        borderWidth: 2,
-                        fill: false
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
+    <footer>
+        <p>Készítők: Szűcs Levente (AHSSPU), Jónás Attila (Q7CJ2Z)</p>
+    </footer>
+    <script src="./chart.js">
+        
     </script>
 </body>
 </html>
