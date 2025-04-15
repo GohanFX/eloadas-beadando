@@ -98,11 +98,13 @@ const SnakeGame: React.FC<SnakeGameProps> = ({defaultHealth, pointsPerApple, sta
         <p className="font-semibold">⭐ Pont: {score}</p>
       </div>
       {snake.map((segment, index) => (
-        <div
-          key={index}
-          className="absolute bg-green-500 w-5 h-5 rounded"
-          style={{ left: `${segment.x * 20}px`, top: `${segment.y * 20}px` }}
-        />
+        <motion.div
+        key={index}
+        initial={false}
+        animate={{ left: segment.x * 20, top: segment.y * 20 }}
+        transition={{ duration: 0.2, ease: "easeInOut" }}
+        className="absolute bg-green-500 w-5 h-5 rounded"
+      />
       ))}
       <div
         className="absolute bg-red-500 w-5 h-5 rounded"
