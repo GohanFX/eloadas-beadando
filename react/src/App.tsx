@@ -3,13 +3,22 @@ import { Button } from "./components/ui/button";
 import SnakeGame from "./components/SnakeGame";
 import HangmanGame from "./components/HangmanGame";
 import { motion } from "framer-motion";
+import { ChevronLeft } from "lucide-react";
 
 function App() {
   const [selectedGame, setSelectedGame] = useState<"snake" | "hangman">("snake");
   const words = ["react", "typescript", "hangman", "developer", "frontend"];
 
   return (
-    <div className="flex flex-col items-center p-6">
+    <div className="flex flex-col items-center p-6 relative min-h-screen bg-gradient-to-t from-green-500 to-white">
+     
+        <div className="top-4 left-4 absolute flex space-x-1 items-center">
+
+            <span> <ChevronLeft  className="" size={24} /></span>
+            <span><a href="/">Vissza</a></span>
+
+        </div>
+      
       <h1 className="text-3xl font-bold mb-6 text-zinc-900">React Játékok</h1>
       <div className="flex space-x-4 bg-gray-800 p-2 rounded-lg">
         <Button
