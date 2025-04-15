@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 
-const MAX_ATTEMPTS = 6;
 
 interface HangmanProps {
   words: string[];
