@@ -79,6 +79,10 @@ function initForm() {
         const name = document.getElementById("name").value;
         const height = document.getElementById("height").value;
         const weight = document.getElementById("weight").value;
+
+        if(name.trim() === "" || height.trim() === "" || weight.trim() === "") return alert("Kérlek töltsd ki az összes mezőt!");
+        if(name.length > 30) return alert("A név maximum 30 karakter lehet!");
+       
         
         if (id) {
             await updateData(id, name, height, weight);
