@@ -1,9 +1,14 @@
-for (let i = 0; i < 5; i++) {
-  document.write('<tr onclick="drawChart(this)">');
-  for (let j = 0; j < 5; j++) {
-    document.write(`<td>${Math.floor(Math.random() * 100)}</td>`);
-  }
-  document.write("</tr>");
+function fillTable() {
+    for (let i = 0; i < 5; i++) {
+        const row = document.createElement("tr");
+        for (let j = 0; j < 5; j++) {
+            const cell = document.createElement("td");
+            cell.innerText = Math.floor(Math.random() * 100);
+            row.appendChild(cell);
+        }
+        row.onclick = () => drawChart(row);
+        document.getElementById("table").appendChild(row);
+    }
 }
 
 let chart;
@@ -39,3 +44,5 @@ function drawChart(row) {
     },
   });
 }
+fillTable();
+drawChart(document.querySelector("#table tr"));
